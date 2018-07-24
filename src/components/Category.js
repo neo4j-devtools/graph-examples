@@ -1,55 +1,68 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Link } from 'react-router-dom';
-import { Grid, Card } from 'semantic-ui-react';
-import axios from 'axios';
-import GraphGistCard from './GraphGistCard';
+import { Header, Loader } from 'semantic-ui-react';
+import axios, { CancelToken, isCancel } from '../axios';
+import GraphGistList from './GraphGistList';
+
+const initialState = {
+  isLoadingCategory: true,
+  category: null,
+  cancelRequest: null
+};
 
 class Category extends Component {
-  state = {
-    category: null,
-    graphGists: []
+  state = initialState; 
+  componentDidMount() {
+    this.getCategory();
   }
 
-  componentDidMount() {
+  componentWillUnmount() {
+    const {cancelRequest} = this.state;
+    if(typeof cancelRequest === 'function') {
+      cancelRequest();
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.match.params !== this.props.match.params) {
+      this.getCategory()
+    }
+  }
+
+  getCategory(params) {
     const {categorySlug} = this.props.match.params;
 
-    axios.get(`https://portal.graphgist.org/categories/${categorySlug}.json`)
-      .then((response) => {
-        this.setState({category: response.data});
+    this.setState(initialState, () => {
+      axios.get(`/categories/${categorySlug}.json`, {
+        cancelToken: new CancelToken((cancelRequest) => {
+          this.setState({cancelRequest});
+        })
       })
-      .catch((error) => {
-        this.setState({error: true});
-      });
-
-    axios.get('https://portal.graphgist.org/graph_gists.json', {
-        params: {
-          category: categorySlug
-        }
-      })
-      .then((response) => {
-        this.setState({graphGists: response.data});
-      })
-      .catch((error) => {
-        this.setState({error: true});
-      });
+        .then((response) => {
+          this.setState({category: response.data, isLoadingCategory: false});
+        })
+        .catch((error) => {
+          if (!isCancel(error)) {
+            this.setState({error: true});
+          }
+        });
+    });
   }
 
   render() {
-    const {category, graphGists} = this.state;
+    const {category, isLoadingCategory} = this.state;
+    const {categorySlug} = this.props.match.params;
     return (
-      <BrowserRouter>
+      isLoadingCategory ? 
+        <Loader active inline='centered' />
+      :
         <div>
-          <header>
-            <h1>{category && category.title}</h1>
-          </header>
+          <Header as="h2">{category && category.title}</Header>
 
-          <Card.Group>
-            {this.state.graphGists.map((graphgist) => {
-              return <GraphGistCard key={graphgist.id} graphgist={graphgist} />;
-            })}
-          </Card.Group>
+          <GraphGistList
+            url="/graph_gists.json"
+            params={{category: categorySlug}}
+          />
         </div>
-      </BrowserRouter>
     );
   }
 }
