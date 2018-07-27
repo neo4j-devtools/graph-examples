@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, Loader } from 'semantic-ui-react';
+import { Card, Loader, Message } from 'semantic-ui-react';
 import axios, { CancelToken, isCancel } from '../axios';
 import GraphGistCard from './GraphGistCard';
 
@@ -32,6 +32,11 @@ class GraphGistList extends Component {
   getGraphGistList() {
     const {url, params} = this.props;
 
+    const {cancelRequest} = this.state;
+    if(typeof cancelRequest === 'function') {
+      cancelRequest();
+    }
+
     this.setState(initialState, () => {
       axios.get(url, {
         params,
@@ -56,11 +61,17 @@ class GraphGistList extends Component {
       isLoadingList ?
         <Loader active inline='centered' />
       :
-        <Card.Group>
-          {graphGists.map((graphgist) => {
-            return <GraphGistCard key={graphgist.id} graphgist={graphgist} />;
-          })}
-        </Card.Group>
+        (graphGists.length > 0 ?
+          <Card.Group>
+            {graphGists.map((graphgist) => {
+              return <GraphGistCard key={graphgist.id} graphgist={graphgist} />;
+            })}
+          </Card.Group>
+        :
+          <Message>
+            <Message.Header>Nothing found</Message.Header>
+          </Message>
+        )
     );
   }
 }
