@@ -1,0 +1,11 @@
+#app {
+  max-width: 968px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.categoriesList .item img {
+  vertical-align: middle !important;
+  width: 20px !important;
+}
+

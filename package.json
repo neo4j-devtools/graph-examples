@@ -2,8 +2,12 @@
   "name": "graph-gallery",
   "version": "0.1.0",
   "private": true,
+  "neo4jDesktop": {
+    "apiVersion": "^1.2.0"
+  },
   "dependencies": {
     "axios": "^0.18.0",
+    "moment": "^2.22.2",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-router": "^4.3.1",
