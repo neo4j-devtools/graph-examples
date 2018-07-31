@@ -6,7 +6,7 @@ class Home extends Component {
   render() {
     return (
       <div>
-        <Header as='h2'>Featured GraphGists</Header>
+        <Header as='h2'>Featured Graph Examples</Header>
         <GraphGistList url='/featured_graphgists.json' />
       </div>
     );

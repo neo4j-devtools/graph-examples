@@ -1,4 +1,4 @@
-# Graph Gallery for Neo4j Desktop
+# Graph Examples for Neo4j Desktop
 
 This is a frontend for [Graphgist Portal](https://portal.graphgist.org/).
 
