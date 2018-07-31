@@ -47,3 +47,12 @@ Launches the test runner in the interactive watch mode:
 yarn test
 ```
 
+## Loading into Neo4j Desktop
+
+* Go to your Neo4j Desktop’s settings (bottom left gear icon).
+* Enable development mode.
+* Set Development App Entry Point to the address where the Graph Gallery is running.
+* Set Development App Root Path to this cloned repository, where package.json is.
+* Close settings by clicking again on the gear icon.
+* Click on Development App
+
