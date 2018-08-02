@@ -1,8 +1,16 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 import { NavLink } from 'react-router-dom';
-import { Input, Menu, Dropdown, Label } from 'semantic-ui-react';
+import {bindActionCreators} from 'redux';
+import { connect } from 'react-redux';
+import { Input, Menu, Dropdown, Label, Loader } from 'semantic-ui-react';
 import axios, { CancelToken, isCancel } from '../axios';
+import { Auth0Lock } from 'auth0-lock';
+import { getUserSuccess, getUserFailure, clearUser } from '../auth/actions';
+
+const CLIENT_ID = 'IwPWdSO0sxld4H0ndFj2puQNQIIDLiME';
+const CLIENT_DOMAIN = 'neo4j-sync.auth0.com';
+const SCOPE = 'openid email profile read:current_user';
 
 class AppMenu extends Component {
   state = {
@@ -10,7 +18,8 @@ class AppMenu extends Component {
     industries: [],
     cancelRequestUseCases: null,
     cancelRequestIndustries: null,
-    search: ''
+    search: '',
+    isLoadingProfile: false
   }
 
   componentDidMount() {
@@ -41,6 +50,29 @@ class AppMenu extends Component {
           this.setState({error: true});
         }
       });
+
+    const auth = new Auth0Lock(CLIENT_ID, CLIENT_DOMAIN, {
+      auth: {
+        redirect: false,
+        redirectUrl: window.location.origin,
+        sso: false,
+        responseType: 'code token id_token',
+        params: {
+          scope: SCOPE
+        }
+      }
+    });
+    auth.on('authenticated', (authResult) => {
+      localStorage.setItem('auth', JSON.stringify(authResult));
+      this.getUserProfile(authResult);
+      auth.hide();
+    });
+    this.setState({auth});
+
+    const authToken = localStorage.getItem('auth');
+    if(authToken) {
+      this.getUserProfile(JSON.parse(authToken));
+    } 
   }
 
   componentWillUnmount() {
@@ -52,6 +84,34 @@ class AppMenu extends Component {
       cancelRequestIndustries();
     }
   }
+
+  getUserProfile(authToken) {
+    this.setState({isLoadingProfile: true}, () => {
+      axios.get('/users/auth/authtoken/callback', {
+        params: {
+          access_token: authToken.accessToken,
+          state: authToken.state,
+          token_type: authToken.tokenType,
+          expires_in: authToken.expiresIn
+        }
+      })
+        .then((response) => {
+          this.props.getUserSuccess(response.data.user);
+          this.setState({isLoadingProfile: false});
+        })
+        .catch((error) => {
+          this.props.getUserFailure(error);
+          localStorage.removeItem('auth');
+          this.setState({isLoadingProfile: false});
+        });
+    });
+  }
+
+  handleSignOut = (e) => {
+    e.preventDefault();
+    this.props.clearUser();
+    localStorage.removeItem('auth');
+  }
   
   handleSearch = (e) => {
     this.setState({search: e.target.value});
@@ -59,9 +119,12 @@ class AppMenu extends Component {
   }
 
   render() {
+    const { user } = this.props.auth;
+    const { isLoadingProfile } = this.state;
+
     return (
       <Menu pointing>
-        <Menu.Item as={NavLink} to="/">Graph Gallery</Menu.Item>
+        <Menu.Item as={NavLink} to="/" exact>Graph Gallery</Menu.Item>
         <Dropdown item text='Use Cases'>
           <Dropdown.Menu className="categoriesList">
             {this.state.useCases.map((category) => {
@@ -88,6 +151,7 @@ class AppMenu extends Component {
             })}
           </Dropdown.Menu>
         </Dropdown>
+        { user && <Menu.Item as={NavLink} to="/my-graphgists">My Graphgists</Menu.Item>}
         <Menu.Menu position='right'>
           <Menu.Item>
             <Input
@@ -97,10 +161,22 @@ class AppMenu extends Component {
               value={this.state.search}
             />
           </Menu.Item>
+          { !user && <Menu.Item onClick={() => {this.state.auth.show()}}>{isLoadingProfile ? <Loader inline active /> : 'Sign in'}</Menu.Item>}
+          { user && <Menu.Item onClick={this.handleSignOut}>Sign out</Menu.Item>}
         </Menu.Menu>
       </Menu>
     );
   }
 }
 
-export default withRouter(AppMenu);
+const mapStateToProps = state => {
+  return {
+    auth: state.auth
+  };
+}
+
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators({getUserSuccess, getUserFailure, clearUser}, dispatch);
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AppMenu));

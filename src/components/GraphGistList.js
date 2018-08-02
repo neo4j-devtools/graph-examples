@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Card, Loader, Message } from 'semantic-ui-react';
 import axios, { CancelToken, isCancel } from '../axios';
 import GraphGistCard from './GraphGistCard';
@@ -64,7 +65,7 @@ class GraphGistList extends Component {
         (graphGists.length > 0 ?
           <Card.Group>
             {graphGists.map((graphgist) => {
-              return <GraphGistCard key={graphgist.id} graphgist={graphgist} />;
+              return <GraphGistCard key={graphgist.id} graphgist={graphgist} showEdit={this.props.showEdit} />;
             })}
           </Card.Group>
         :
@@ -75,5 +76,13 @@ class GraphGistList extends Component {
     );
   }
 }
+
+GraphGistList.propTypes = {
+  showEdit: PropTypes.bool.isRequired
+};
+
+GraphGistList.defaultProps = {
+  showEdit: false
+};
 
 export default GraphGistList;
