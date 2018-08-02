@@ -6,7 +6,7 @@ import { BASE_API_URL } from '../axios';
 
 class GraphGistCard extends Component {
   render() {
-    const {graphgist} = this.props;
+    const {graphgist, showEdit} = this.props;
     return <Card>
       <Card.Content>
         <Card.Header>{graphgist.title}</Card.Header>
@@ -33,6 +33,9 @@ class GraphGistCard extends Component {
           <List.Item>
             <List.Content><Button primary to={`${BASE_API_URL}/graph_gists/${graphgist.slug}/graph_guide`}>Play as Browser Guide</Button></List.Content>
           </List.Item>
+          {showEdit && <List.Item>
+            <List.Content><a className="ui teal button" href={`${BASE_API_URL}/graph_gists/${graphgist.graphgist  ? graphgist.graphgist.id : graphgist.id}/edit_by_owner`} target='_blank'>Edit</a></List.Content>
+          </List.Item>}
         </List>
       </Card.Content>
     </Card>;
@@ -43,7 +46,12 @@ GraphGistCard.propTypes = {
   graphgist: PropTypes.shape({
     id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired
-  })
+  }),
+  showEdit: PropTypes.bool.isRequired
+};
+
+GraphGistCard.defaultProps = {
+  showEdit: false
 };
 
 export default GraphGistCard;
