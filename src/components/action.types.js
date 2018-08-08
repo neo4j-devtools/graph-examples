@@ -1,0 +1,2 @@
+export const SET_NEO4J_BROWSER_URL = 'SET_NEO4J_BROWSER_URL';
+

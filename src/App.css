@@ -9,3 +9,19 @@
   width: 20px !important;
 }
 
+.graphGistCard__image {
+  padding: 0 !important;
+  flex-grow: 0 !important;
+  height: 225px;
+  text-align: center;
+}
+
+.graphGistCard__image img {
+  height: max-content;
+  max-height: 223px;
+  display: inline-block !important;
+}
+
+.graphGistCard__footer {
+  flex-grow: 0 !important;
+}
