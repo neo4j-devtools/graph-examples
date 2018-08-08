@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 import { NavLink } from 'react-router-dom';
-import {bindActionCreators} from 'redux';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Input, Menu, Dropdown, Label, Loader } from 'semantic-ui-react';
 import axios, { CancelToken, isCancel } from '../axios';
