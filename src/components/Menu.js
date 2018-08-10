@@ -8,8 +8,8 @@ import axios, { CancelToken, isCancel } from '../axios';
 import { Auth0Lock } from 'auth0-lock';
 import { getUserSuccess, getUserFailure, clearUser } from '../auth/actions';
 
-const CLIENT_ID = 'IwPWdSO0sxld4H0ndFj2puQNQIIDLiME';
-const CLIENT_DOMAIN = 'neo4j-sync.auth0.com';
+const CLIENT_ID = process.env.REACT_APP_AUTH0_CLIENT_ID;
+const CLIENT_DOMAIN = process.env.REACT_APP_AUTH0_CLIENT_DOMAIN;
 const SCOPE = 'openid email profile read:current_user';
 
 class AppMenu extends Component {
