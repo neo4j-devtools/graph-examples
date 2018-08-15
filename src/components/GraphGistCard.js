@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Card, Image, List } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
+import { Card, Image, List, Label } from 'semantic-ui-react';
 import moment from 'moment';
 import { connect } from 'react-redux';
 import { BASE_API_URL } from '../axios';
@@ -24,6 +25,20 @@ class GraphGistCard extends Component {
           {graphgist.featured && <List.Item>
             <List.Icon name='star' />
             <List.Content>Featured</List.Content>
+          </List.Item>}
+          {(graphgist.use_cases.length > 0 || graphgist.industries.length > 0) && <List.Item className="graphGistCard__labels">
+            <List.Content>
+              {graphgist.use_cases.map((category, index) => {
+                return <Label as={Link} key={index} to={`/category/${category.slug}`} image>
+                  <img src={category.image} />
+                  {category.name}</Label>;
+              })}
+             {graphgist.industries.map((category, index) => {
+                return <Label as={Link} key={index} to={`/category/${category.slug}`} image>
+                  <img src={category.image} />
+                  {category.name}</Label>;
+              })}
+            </List.Content>
           </List.Item>}
           <List.Item>
             <List.Icon name='calendar' />

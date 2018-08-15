@@ -22,6 +22,16 @@
   display: inline-block !important;
 }
 
+.graphGistCard__labels .label {
+  margin-top: 5px !important;
+  margin-bottom: 5px !important;
+  margin-right: 10px !important;
+}
+
+.graphGistCard__labels .label img {
+  margin: 0;
+}
+
 .graphGistCard__footer {
   flex-grow: 0 !important;
 }
