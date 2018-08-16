@@ -56,7 +56,7 @@ class GraphGistCard extends Component {
             <List.Content><a className="ui teal button" href={`${BASE_API_URL}/graph_gists/${graphgist.graphgist  ? graphgist.graphgist.id : graphgist.id}/edit_by_owner`} target='_blank'>Edit</a></List.Content>
           </List.Item>}
           <List.Item>
-            <List.Content><a className="ui primary button" href={`${neo4j.browserURL}?cmd=play&arg=${BASE_API_URL}/graph_gists/${graphgist.slug}/graph_guide`} target='_blank'>Play as Browser Guide</a></List.Content>
+            <List.Content><a className="ui primary button" href={`${neo4j.browserURL}?cmd=play&arg=https://guides.neo4j.com/graph-examples/${graphgist.slug}/graph_guide`} target='_blank'>Play as Browser Guide</a></List.Content>
           </List.Item>
         </List>
       </Card.Content>
