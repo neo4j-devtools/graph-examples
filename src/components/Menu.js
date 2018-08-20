@@ -3,14 +3,14 @@ import { withRouter } from 'react-router';
 import { NavLink } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Input, Menu, Dropdown, Label, Loader } from 'semantic-ui-react';
+import { Input, Menu, Dropdown, Label } from 'semantic-ui-react';
 import axios, { CancelToken, isCancel } from '../axios';
-import { Auth0Lock } from 'auth0-lock';
+// import { Auth0Lock } from 'auth0-lock';
 import { getUserSuccess, getUserFailure, clearUser } from '../auth/actions';
 
-const CLIENT_ID = 'IwPWdSO0sxld4H0ndFj2puQNQIIDLiME';
-const CLIENT_DOMAIN = 'neo4j-sync.auth0.com';
-const SCOPE = 'openid email profile read:current_user';
+// const CLIENT_ID = 'IwPWdSO0sxld4H0ndFj2puQNQIIDLiME';
+// const CLIENT_DOMAIN = 'neo4j-sync.auth0.com';
+// const SCOPE = 'openid email profile read:current_user';
 
 class AppMenu extends Component {
   state = {
@@ -51,6 +51,7 @@ class AppMenu extends Component {
         }
       });
 
+    /*
     const auth = new Auth0Lock(CLIENT_ID, CLIENT_DOMAIN, {
       auth: {
         redirect: false,
@@ -73,6 +74,7 @@ class AppMenu extends Component {
     if(authToken) {
       this.getUserProfile(JSON.parse(authToken));
     } 
+    */
   }
 
   componentWillUnmount() {
@@ -119,8 +121,8 @@ class AppMenu extends Component {
   }
 
   render() {
-    const { user } = this.props.auth;
-    const { isLoadingProfile } = this.state;
+    // const { user } = this.props.auth;
+    // const { isLoadingProfile } = this.state;
 
     return (
       <Menu pointing>
@@ -151,7 +153,7 @@ class AppMenu extends Component {
             })}
           </Dropdown.Menu>
         </Dropdown>
-        { user && <Menu.Item as={NavLink} to="/my-graphgists">My Graphgists</Menu.Item>}
+        {/* user && <Menu.Item as={NavLink} to="/my-graphgists">My Graphgists</Menu.Item> */}
         <Menu.Menu position='right'>
           <Menu.Item>
             <Input
@@ -161,8 +163,8 @@ class AppMenu extends Component {
               value={this.state.search}
             />
           </Menu.Item>
-          { !user && <Menu.Item onClick={() => {this.state.auth.show()}}>{isLoadingProfile ? <Loader inline active /> : 'Sign in'}</Menu.Item>}
-          { user && <Menu.Item onClick={this.handleSignOut}>Sign out</Menu.Item>}
+          {/* !user && <Menu.Item onClick={() => {this.state.auth.show()}}>{isLoadingProfile ? <Loader inline active /> : 'Sign in'}</Menu.Item>}
+          { user && <Menu.Item onClick={this.handleSignOut}>Sign out</Menu.Item> */}
         </Menu.Menu>
       </Menu>
     );
