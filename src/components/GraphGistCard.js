@@ -41,10 +41,6 @@ class GraphGistCard extends Component {
             </List.Content>
           </List.Item>}
           <List.Item>
-            <List.Icon name='calendar' />
-            <List.Content>Last update at {moment(graphgist.updated_at).format('lll')}</List.Content>
-          </List.Item>
-          <List.Item>
             <List.Icon name='file code outline' />
             <List.Content><a href={`${BASE_API_URL}/graph_gists/${graphgist.slug}/source`} target='_blank'>Source</a></List.Content>
           </List.Item>
