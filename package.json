@@ -1,6 +1,6 @@
 {
   "name": "graph-gallery",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "neo4jDesktop": {
     "apiVersion": "^1.2.0"
