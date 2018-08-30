@@ -1,7 +1,6 @@
 {
   "name": "graph-gallery",
   "version": "0.1.1",
-  "private": true,
   "neo4jDesktop": {
     "apiVersion": "^1.2.0"
   },
@@ -26,6 +25,6 @@
     "postbuild": "rm -rf dist && mv build dist",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "prepublish": "npm run build"
+    "prepublishOnly": "npm run build"
   }
 }
