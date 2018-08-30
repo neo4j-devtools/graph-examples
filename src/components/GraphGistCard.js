@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Card, Image, List, Label } from 'semantic-ui-react';
-import moment from 'moment';
 import { connect } from 'react-redux';
 import { BASE_API_URL } from '../axios';
 

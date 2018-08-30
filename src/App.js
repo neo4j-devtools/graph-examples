@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { MemoryRouter } from 'react-router';
+import { Route } from 'react-router-dom';
 import { Segment } from 'semantic-ui-react';
 import { DesktopIntegration } from "graph-app-kit/components/DesktopIntegration";
 import { bindActionCreators } from 'redux';
@@ -23,7 +24,7 @@ class App extends Component {
 
   render() {
     return (
-      <BrowserRouter>
+      <MemoryRouter>
         <div id="app">
           <AppMenu />
 
@@ -39,7 +40,7 @@ class App extends Component {
             onMount={this.setNeo4jURL}
           />
         </div>
-      </BrowserRouter>
+      </MemoryRouter>
     );
   }
 }
