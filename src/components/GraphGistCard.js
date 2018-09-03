@@ -42,7 +42,7 @@ class GraphGistCard extends Component {
           </List.Item>}
           <List.Item>
             <List.Icon name='file code outline' />
-            <List.Content><a href={`${BASE_API_URL}/graph_gists/${graphgist.slug}/source`} target='_blank'>Source</a></List.Content>
+            <List.Content><a href={`${BASE_API_URL}/graph_gists/${graphgist.slug}`} target='_blank'>Source</a></List.Content>
           </List.Item>
         </List>
       </Card.Content>
