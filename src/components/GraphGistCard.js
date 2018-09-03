@@ -40,6 +40,10 @@ class GraphGistCard extends Component {
               })}
             </List.Content>
           </List.Item>}
+          {graphgist.neo4j_version && <List.Item>
+            <List.Icon name='info circle' />
+            <List.Content>Neo4j Version: {graphgist.neo4j_version}</List.Content>
+          </List.Item>}
           <List.Item>
             <List.Icon name='file code outline' />
             <List.Content><a href={`${BASE_API_URL}/graph_gists/${graphgist.slug}`} target='_blank'>Source</a></List.Content>
