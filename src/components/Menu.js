@@ -153,6 +153,7 @@ class AppMenu extends Component {
             })}
           </Dropdown.Menu>
         </Dropdown>
+        {this.props.neo4j.graphName && <Menu.Item>Connected to Graph: {this.props.neo4j.graphName}</Menu.Item>}
         {/* user && <Menu.Item as={NavLink} to="/my-graphgists">My Graphgists</Menu.Item> */}
         <Menu.Menu position='right'>
           <Menu.Item>
@@ -173,7 +174,8 @@ class AppMenu extends Component {
 
 const mapStateToProps = state => {
   return {
-    auth: state.auth
+    auth: state.auth,
+    neo4j: state.neo4j
   };
 }
 

@@ -8,7 +8,9 @@
   "dependencies": {
     "auth0-lock": "^11.8.1",
     "axios": "^0.18.0",
+    "classnames": "^2.2.6",
     "graph-app-kit": "^1.0.2",
+    "lodash": "^4.17.10",
     "moment": "^2.22.2",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",

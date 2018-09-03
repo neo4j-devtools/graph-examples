@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Card, Image, List, Label } from 'semantic-ui-react';
 import { connect } from 'react-redux';
+import classNames from 'classnames';
 import { BASE_API_URL } from '../axios';
 
 class GraphGistCard extends Component {
@@ -51,7 +52,12 @@ class GraphGistCard extends Component {
             <List.Content><a className="ui teal button" href={`${BASE_API_URL}/graph_gists/${graphgist.graphgist  ? graphgist.graphgist.id : graphgist.id}/edit_by_owner`} target='_blank'>Edit</a></List.Content>
           </List.Item>}
           <List.Item>
-            <List.Content><a className="ui primary button" href={`${neo4j.browserURL}?cmd=play&arg=https://guides.neo4j.com/graph-examples/${graphgist.slug}/graph_guide`} target='_blank'>Play as Browser Guide</a></List.Content>
+            <List.Content>
+              <a
+                className={classNames('ui primary button', {'disabled': !neo4j.graphName})}
+                href={neo4j.graphName ? `${neo4j.browserURL}?cmd=play&arg=https://guides.neo4j.com/graph-examples/${graphgist.slug}/graph_guide` : '#'}
+                target='_blank'>Play as Browser Guide</a>
+            </List.Content>
           </List.Item>
         </List>
       </Card.Content>

@@ -7,6 +7,11 @@ export default function neo4j(state = getInitialState(), action) {
         ...state,
         browserURL: action.url
       };
+    case Types.SET_NEO4J_CURRENT_DB:
+      return {
+        ...state,
+        graphName: action.graphName
+      };
     default:
       return state;
   }
@@ -14,6 +19,7 @@ export default function neo4j(state = getInitialState(), action) {
 
 function getInitialState() {
   return {
-    browserURL: 'http://localhost:7474/browser'
+    browserURL: 'http://localhost:7474/browser',
+    graphName: null
   }
 }
