@@ -23,9 +23,17 @@ class GraphGistCard extends Component {
             <List.Content><Link to={`/people/${graphgist.author.id}`}>{graphgist.author.name}</Link></List.Content>
           </List.Item>}
           {graphgist.featured && <List.Item>
-            <List.Icon name='star' />
-            <List.Content>Featured</List.Content>
+            <List.Icon name='checkmark' />
+            <List.Content><Link to="/">Featured</Link></List.Content>
           </List.Item>}
+          {graphgist.neo4j_version && <List.Item>
+            <List.Icon name='info circle' />
+            <List.Content>Neo4j Version: {graphgist.neo4j_version}</List.Content>
+          </List.Item>}
+          <List.Item>
+            <List.Icon name='file code outline' />
+            <List.Content><a href={`${BASE_API_URL}/graph_gists/${graphgist.slug}`} target='_blank'>Source</a></List.Content>
+          </List.Item>
           {(graphgist.use_cases.length > 0 || graphgist.industries.length > 0) && <List.Item className="graphGistCard__labels">
             <List.Content>
               {graphgist.use_cases.map((category, index) => {
@@ -40,14 +48,6 @@ class GraphGistCard extends Component {
               })}
             </List.Content>
           </List.Item>}
-          {graphgist.neo4j_version && <List.Item>
-            <List.Icon name='info circle' />
-            <List.Content>Neo4j Version: {graphgist.neo4j_version}</List.Content>
-          </List.Item>}
-          <List.Item>
-            <List.Icon name='file code outline' />
-            <List.Content><a href={`${BASE_API_URL}/graph_gists/${graphgist.slug}`} target='_blank'>Source</a></List.Content>
-          </List.Item>
         </List>
       </Card.Content>
       <Card.Content className="graphGistCard__footer">
