@@ -16,7 +16,8 @@ import 'semantic-ui-css/semantic.min.css';
 import './App.css';
 
 class App extends Component {
-  setNeo4jURL = (context) => {
+  handleNeo4jContext = (context) => {
+    let currentActiveGraph;
     context.projects.forEach((project) => {
       const activeGraph = _.find(project.graphs, { 'status': 'ACTIVE' });
       if (activeGraph) {
@@ -25,8 +26,13 @@ class App extends Component {
           this.props.setNeo4jBrowserUrl(`http://${http.host}:${http.port}/browser`);
         }
         this.props.setNeo4jCurrentDB(activeGraph.name);
+        currentActiveGraph = activeGraph;
       }
     });
+
+    if (!currentActiveGraph) {
+      this.props.setNeo4jCurrentDB(null);
+    }
   }
 
   render() {
@@ -44,7 +50,8 @@ class App extends Component {
 
           <DesktopIntegration
             integrationPoint={window.neo4jDesktopApi}
-            onMount={this.setNeo4jURL}
+            onMount={this.handleNeo4jContext}
+            on={(event, newContext) => {this.handleNeo4jContext(newContext)}}
           />
         </div>
       </MemoryRouter>
