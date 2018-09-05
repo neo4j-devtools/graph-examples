@@ -20,7 +20,7 @@ class GraphGistCard extends Component {
         <List>
           {graphgist.author && <List.Item>
             <List.Icon name='user' />
-            <List.Content>{graphgist.author.name}</List.Content>
+            <List.Content><Link to={`/people/${graphgist.author.id}`}>{graphgist.author.name}</Link></List.Content>
           </List.Item>}
           {graphgist.featured && <List.Item>
             <List.Icon name='star' />
