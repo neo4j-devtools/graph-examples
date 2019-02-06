@@ -8,7 +8,8 @@ import { BASE_API_URL } from '../axios';
 
 class GraphGistCard extends Component {
   render() {
-    const {graphgist, showEdit, neo4j} = this.props;
+    const {graphgist, showEdit} = this.props;
+    const playUrl = encodeURI(`https://guides.neo4j.com/graph-examples/${graphgist.slug}/graph_guide`);
     return <Card className="graphGistCard">
       <Card.Content className="graphGistCard__header">
         <Card.Header>{graphgist.title}</Card.Header>
@@ -58,9 +59,9 @@ class GraphGistCard extends Component {
           <List.Item>
             <List.Content>
               <a
-                className={classNames('ui primary button', {'disabled': !neo4j.graphName})}
-                href={neo4j.graphName ? `${neo4j.browserURL}?cmd=play&arg=https://guides.neo4j.com/graph-examples/${graphgist.slug}/graph_guide` : '#'}
-                target='_blank'>Play as Browser Guide</a>
+                className={classNames('ui primary button')}
+                href={`neo4j://graphapps/neo4j-browser?cmd=play&arg=${playUrl}`}
+              >Play as Browser Guide</a>
             </List.Content>
           </List.Item>
         </List>
