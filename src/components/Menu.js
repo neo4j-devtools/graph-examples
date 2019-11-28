@@ -126,7 +126,7 @@ class AppMenu extends Component {
 
     return (
       <Menu pointing>
-        <Menu.Item as={NavLink} to="/" exact>Graph Gallery</Menu.Item>
+        <Menu.Item as={NavLink} to="/" exact>Graph Examples</Menu.Item>
         <Dropdown item text='Use Cases'>
           <Dropdown.Menu className="categoriesList">
             {this.state.useCases.map((category) => {

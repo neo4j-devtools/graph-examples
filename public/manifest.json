@@ -1,0 +1,10 @@
+{
+    "name": "graph-gallery",
+    "version": "0.1.6",
+    "description": "A browseable selection of graph use-case examples",
+    "homepage": "https://portal.graphgist.org",
+    "icons": [{"src": "./icon.png","type": "png"} ],
+    "neo4jDesktop": {
+        "apiVersion": "^1.2.0"
+    }
+}
