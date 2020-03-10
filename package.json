@@ -1,5 +1,5 @@
 {
-  "name": "@neo4j-apps/graph-examples",
+  "name": "graph-examples",
   "version": "0.1.7",
   "neo4jDesktop": {
     "apiVersion": "^1.2.0"
