@@ -1,12 +1,13 @@
 {
-  "name": "graph-gallery",
-  "version": "0.1.6",
+  "name": "@neo4j-apps/graph-examples",
+  "version": "0.1.7",
   "neo4jDesktop": {
     "apiVersion": "^1.2.0"
   },
   "description": "A browseable selection of graph use-case examples",
   "icons": [{"src": "./icon.png","type": "png"} ],
   "homepage": ".",
+  "repository": "git://github.com/neo4j-apps/graph-examples.git",
   "dependencies": {
     "auth0-lock": "^11.8.1",
     "axios": "^0.18.0",

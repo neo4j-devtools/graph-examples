@@ -1,6 +1,6 @@
 {
-    "name": "graph-gallery",
-    "version": "0.1.6",
+    "name": "graph-examples",
+    "version": "0.1.7",
     "description": "A browseable selection of graph use-case examples",
     "homepage": "https://portal.graphgist.org",
     "icons": [{"src": "./icon.png","type": "png"} ],
