@@ -11,6 +11,7 @@ import Home from './components/Home';
 import Search from './components/Search';
 import Category from './components/Category';
 import MyGraphGists from './components/MyGraphGists';
+import GraphGuides from './components/GraphGuides';
 import PersonProfile from './components/PersonProfile';
 import { setNeo4jBrowserUrl, setNeo4jCurrentDB } from './components/actions'; 
 import 'semantic-ui-css/semantic.min.css';
@@ -47,6 +48,7 @@ class App extends Component {
             <Route path="/search/:query" component={Search} />
             <Route path="/people/:uuid" component={PersonProfile} />
             <Route path="/my-graphgists" component={MyGraphGists} />
+            <Route path="/graph-guides" component={GraphGuides} />
             <Route exact path="/" component={Home} />
           </Segment>
 

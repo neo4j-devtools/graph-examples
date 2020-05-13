@@ -153,6 +153,7 @@ class AppMenu extends Component {
             })}
           </Dropdown.Menu>
         </Dropdown>
+        <Menu.Item as={NavLink} to="/graph-guides" exact>Browser Guides</Menu.Item>
         {this.props.neo4j.graphName && <Menu.Item>Connected to Graph: {this.props.neo4j.graphName}</Menu.Item>}
         {/* user && <Menu.Item as={NavLink} to="/my-graphgists">My Graphgists</Menu.Item> */}
         <Menu.Menu position='right'>
