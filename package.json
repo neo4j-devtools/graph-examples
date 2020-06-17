@@ -1,8 +1,8 @@
 {
-  "name": "graph-examples",
-  "version": "0.1.7",
+  "name": "graph-gallery",
+  "version": "0.1.12",
   "neo4jDesktop": {
-    "apiVersion": "^1.2.0"
+    "apiVersion": "^1.4.0"
   },
   "description": "A browseable selection of graph use-case examples",
   "icons": [{"src": "./icon.png","type": "png"} ],

@@ -9,7 +9,7 @@ class GraphGuides extends Component {
 
       <GraphGistList
         url="/graph_guides.json"
-        showEdit={true}
+        showEdit={false}
       />
     </div>;
   }
