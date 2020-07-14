@@ -60,7 +60,7 @@ class GraphGistCard extends Component {
             <List.Content>
               <a
                 className={classNames('ui primary button')}
-                href={`neo4j://graphapps/neo4j-browser?cmd=play&arg=${playUrl}`}
+                href={`neo4j-desktop://graphapps/neo4j-browser?cmd=play&arg=${playUrl}`}
               >Play as Browser Guide</a>
             </List.Content>
           </List.Item>
