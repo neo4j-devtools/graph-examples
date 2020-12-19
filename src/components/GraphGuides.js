@@ -1,18 +1,26 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Header } from 'semantic-ui-react';
+import gql from "graphql-tag";
 import GraphGistList from './GraphGistList';
+import GraphGistCard from './GraphGistCard';
 
-class GraphGuides extends Component {
-  render() {
-    return <div>
-      <Header as="h2">Graph Guides</Header>
-
-      <GraphGistList
-        url="/graph_guides.json"
-        showEdit={false}
-      />
-    </div>;
+const graphql = gql`
+  query GraphGists {
+    items: GraphGist(is_guide: true, status: live) {
+      ...GraphGistCard
+    }
   }
+  ${GraphGistCard.fragments.graphGist}
+`
+
+function GraphGuides() {
+  return <div>
+    <Header as="h2">Graph Guides</Header>
+
+    <GraphGistList
+      graphql={graphql}
+    />
+  </div>;
 }
 
 export default GraphGuides;

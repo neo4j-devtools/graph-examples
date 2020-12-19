@@ -1,77 +1,60 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Header, Loader, Icon } from 'semantic-ui-react';
-import axios, { CancelToken, isCancel } from '../axios';
+import { useQuery } from "@apollo/client";
+import gql from "graphql-tag";
+import _ from "lodash";
 import GraphGistList from './GraphGistList';
+import GraphGistCard from './GraphGistCard';
 
-const initialState = {
-  isLoadingPersonProfile: true,
-  person: null,
-  cancelRequest: null
-};
-
-class PersonProfile extends Component {
-  state = initialState; 
-  componentDidMount() {
-    this.getPersonProfile();
-  }
-
-  componentWillUnmount() {
-    const {cancelRequest} = this.state;
-    if(typeof cancelRequest === 'function') {
-      cancelRequest();
+const graphql = gql`
+  query PersonQuery($uuid: ID!) {
+    Person(uuid: $uuid) {
+      uuid
+      name
+      twitter_username
     }
   }
+`
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.match.params !== this.props.match.params) {
-      this.getPersonProfile()
+const list_graphql = gql`
+  query GraphGists($uuid: ID!) {
+    items: graphGistsByAuthorPerson(uuid: $uuid) {
+      ...GraphGistCard
     }
   }
+  ${GraphGistCard.fragments.graphGist}
+`
 
-  getPersonProfile(params) {
-    const {uuid} = this.props.match.params;
+function PersonProfile(props) {
+  const {uuid} = props.match.params;
 
-    this.setState(initialState, () => {
-      axios.get(`/people/${uuid}.json`, {
-        cancelToken: new CancelToken((cancelRequest) => {
-          this.setState({cancelRequest});
-        })
-      })
-        .then((response) => {
-          this.setState({person: response.data, isLoadingPersonProfile: false});
-        })
-        .catch((error) => {
-          if (!isCancel(error)) {
-            this.setState({error: true});
-          }
-        });
-    });
-  }
+  const { loading, data } = useQuery(graphql, {
+    fetchPolicy: "cache-and-network",
+    variables: { uuid }
+  });
 
-  render() {
-    const {person, isLoadingPersonProfile} = this.state;
-    const {uuid} = this.props.match.params;
-    return (
-      isLoadingPersonProfile ? 
-        <Loader active inline='centered' />
-      :
-        <div>
-          <Header as="h2">
-            <Header.Content>
-              {person && person.name}
-              {(person && person.twitter_username) && <Header.Subheader>
-                <a href={`https://twitter.com/${person.twitter_username}`}><Icon name="twitter" /> {person.twitter_username}</a>
-              </Header.Subheader>}
-            </Header.Content>
-          </Header>
+  const person = _.get(data, 'Person[0]', null);
 
-          <GraphGistList
-            url="/graph_gists.json"
-            params={{author: uuid}}
-          />
-        </div>
-    );
-  }
+  return (
+    loading ? 
+      <Loader active inline='centered' />
+    :
+      <div>
+        <Header as="h2">
+          <Header.Content>
+            {person && person.name}
+            {(person && person.twitter_username) && <Header.Subheader>
+              <a href={`https://twitter.com/${person.twitter_username}`}><Icon name="twitter" /> {person.twitter_username}</a>
+            </Header.Subheader>}
+          </Header.Content>
+        </Header>
+
+        <GraphGistList
+          graphql={list_graphql}
+          variables={{uuid}}
+        />
+      </div>
+  );
 }
 
 export default PersonProfile;

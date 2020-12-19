@@ -5,18 +5,26 @@
     "apiVersion": "^1.4.0"
   },
   "description": "A browseable selection of graph use-case examples",
-  "icons": [{"src": "./icon.png","type": "png"} ],
+  "icons": [
+    {
+      "src": "./icon.png",
+      "type": "png"
+    }
+  ],
   "homepage": ".",
   "repository": "git://github.com/neo4j-apps/graph-examples.git",
   "dependencies": {
+    "@apollo/client": "^3.3.6",
     "auth0-lock": "^11.21.0",
     "axios": "^0.18.1",
     "classnames": "^2.2.6",
     "graph-app-kit": "^1.0.2",
+    "graphql": "^15.4.0",
+    "graphql-tag": "^2.11.0",
     "lodash": "^4.17.13",
     "moment": "^2.22.2",
-    "react": "^16.4.1",
-    "react-dom": "^16.4.2",
+    "react": "17.0.1",
+    "react-dom": "17.0.1",
     "react-redux": "^5.0.7",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",

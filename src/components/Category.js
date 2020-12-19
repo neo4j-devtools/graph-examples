@@ -1,70 +1,53 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Header, Loader } from 'semantic-ui-react';
-import axios, { CancelToken, isCancel } from '../axios';
+import { useQuery } from "@apollo/client";
+import gql from "graphql-tag";
+import _ from "lodash";
 import GraphGistList from './GraphGistList';
+import GraphGistCard from './GraphGistCard';
 
-const initialState = {
-  isLoadingCategory: true,
-  category: null,
-  cancelRequest: null
-};
-
-class Category extends Component {
-  state = initialState; 
-  componentDidMount() {
-    this.getCategory();
-  }
-
-  componentWillUnmount() {
-    const {cancelRequest} = this.state;
-    if(typeof cancelRequest === 'function') {
-      cancelRequest();
+const graphql = gql`
+  query Category($slug: String!) {
+    category: getCategory(slug: $slug) {
+      slug
+      name
     }
   }
+`
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.match.params !== this.props.match.params) {
-      this.getCategory()
+const list_graphql = gql`
+  query GraphGists($slug: String!) {
+    items: graphGistsByCategory(slug: $slug) {
+      ...GraphGistCard
     }
   }
+  ${GraphGistCard.fragments.graphGist}
+`
 
-  getCategory(params) {
-    const {categorySlug} = this.props.match.params;
+function Category(props) {
+  const {categorySlug} = props.match.params;
 
-    this.setState(initialState, () => {
-      axios.get(`/categories/${categorySlug}.json`, {
-        cancelToken: new CancelToken((cancelRequest) => {
-          this.setState({cancelRequest});
-        })
-      })
-        .then((response) => {
-          this.setState({category: response.data, isLoadingCategory: false});
-        })
-        .catch((error) => {
-          if (!isCancel(error)) {
-            this.setState({error: true});
-          }
-        });
-    });
-  }
+  const { loading, data } = useQuery(graphql, {
+    fetchPolicy: "cache-and-network",
+    variables: {
+      slug: categorySlug
+    }
+  });
 
-  render() {
-    const {category, isLoadingCategory} = this.state;
-    const {categorySlug} = this.props.match.params;
-    return (
-      isLoadingCategory ? 
-        <Loader active inline='centered' />
-      :
-        <div>
-          <Header as="h2">{category && category.title}</Header>
+  const category = _.get(data, 'category', null);
 
-          <GraphGistList
-            url="/graph_gists.json"
-            params={{category: categorySlug}}
-          />
-        </div>
-    );
-  }
+  return (
+    (loading || !data) ? 
+      <Loader active inline='centered' />
+    :
+      <div>
+        <Header as="h2">{category && category.name}</Header>
+        <GraphGistList
+          graphql={list_graphql}
+          variables={{slug: categorySlug}}
+        />
+      </div>
+  );
 }
 
 export default Category;

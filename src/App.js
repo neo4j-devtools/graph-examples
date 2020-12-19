@@ -6,6 +6,7 @@ import { DesktopIntegration } from "graph-app-kit/components/DesktopIntegration"
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import _ from 'lodash';
+import { ApolloClient,  ApolloProvider, InMemoryCache } from "@apollo/client";
 import AppMenu from './components/Menu';
 import Home from './components/Home';
 import Search from './components/Search';
@@ -16,6 +17,13 @@ import PersonProfile from './components/PersonProfile';
 import { setNeo4jBrowserUrl, setNeo4jCurrentDB } from './components/actions'; 
 import 'semantic-ui-css/semantic.min.css';
 import './App.css';
+
+
+const client = new ApolloClient({
+  uri: process.env.REACT_APP_GRAPHQL_URI,
+  cache: new InMemoryCache(),
+});
+
 
 class App extends Component {
   handleNeo4jContext = (context) => {
@@ -40,24 +48,26 @@ class App extends Component {
   render() {
     return (
       <MemoryRouter>
-        <div id="app">
-          <AppMenu />
+        <ApolloProvider client={client}>
+          <div id="app">
+            <AppMenu />
 
-          <Segment>
-            <Route path="/category/:categorySlug" component={Category} />
-            <Route path="/search/:query" component={Search} />
-            <Route path="/people/:uuid" component={PersonProfile} />
-            <Route path="/my-graphgists" component={MyGraphGists} />
-            <Route path="/graph-guides" component={GraphGuides} />
-            <Route exact path="/" component={Home} />
-          </Segment>
+            <Segment>
+              <Route path="/category/:categorySlug" component={Category} />
+              <Route path="/search/:query" component={Search} />
+              <Route path="/people/:uuid" component={PersonProfile} />
+              <Route path="/my-graphgists" component={MyGraphGists} />
+              <Route path="/graph-guides" component={GraphGuides} />
+              <Route exact path="/" component={Home} />
+            </Segment>
 
-          <DesktopIntegration
-            integrationPoint={window.neo4jDesktopApi}
-            onMount={this.handleNeo4jContext}
-            on={(event, newContext) => {this.handleNeo4jContext(newContext)}}
-          />
-        </div>
+            <DesktopIntegration
+              integrationPoint={window.neo4jDesktopApi}
+              onMount={this.handleNeo4jContext}
+              on={(event, newContext) => {this.handleNeo4jContext(newContext)}}
+            />
+          </div>
+        </ApolloProvider>
       </MemoryRouter>
     );
   }
