@@ -1,6 +1,11 @@
 # Graph Examples for Neo4j Desktop
 
-This is a frontend for [Graphgist Portal](https://portal.graphgist.org/).
+> For the updated version, see [https://github.com/neo4j-contrib/graphgist-portal-v3](https://github.com/neo4j-contrib/graphgist-portal-v3)
+
+
+
+
+This ~is~ was a frontend for [Graphgist Portal](https://portal.graphgist.org/).
 
 ## Usage
 
