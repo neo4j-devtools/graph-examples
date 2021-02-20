@@ -10,7 +10,7 @@
   "repository": "git://github.com/neo4j-apps/graph-examples.git",
   "dependencies": {
     "auth0-lock": "^11.21.0",
-    "axios": "^0.18.1",
+    "axios": "^0.21.1",
     "classnames": "^2.2.6",
     "graph-app-kit": "^1.0.2",
     "lodash": "^4.17.13",
